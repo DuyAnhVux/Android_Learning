@@ -1,97 +1,79 @@
 package com.example.myapplication
 
-import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
-import android.widget.EditText
+import android.widget.SeekBar
 import android.widget.TextView
-
-import android.widget.Toast
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var seekBar: SeekBar
+    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var runnable: Runnable
+    private lateinit var handler: Handler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val car = Car()
-//        car.maxSpeed = 120
-//        car.start()
+        seekBar = findViewById(R.id.sbClapping)
+        handler = Handler(Looper.getMainLooper())
+        val buttonPlay = findViewById<FloatingActionButton>(R.id.fabPlay)
+        val buttonPause = findViewById<FloatingActionButton>(R.id.fabPause)
+        val buttonStop = findViewById<FloatingActionButton>(R.id.fabStop)
 
-        val car = MyCar()
-        car.maxSpeed = 200
-        car.start()
+        buttonPlay.setOnClickListener {
+            if (mediaPlayer == null){
+                mediaPlayer = MediaPlayer.create(this, R.raw.clapping)
+                initializeSeekBar()
+            }
+            mediaPlayer?.start()
+        }
 
-//        val driver = Driver("BoBo")
-//        driver.showDetails()
-//        Log.i("MY_TAG", "MainActivity: OnCreate")
-//        val greetingTextView = findViewById<TextView>(R.id.tvHello)
-//        val inputField = findViewById<EditText>(R.id.etName)
-//        val submitButton = findViewById<Button>(R.id.btnSubmit)
-//        val offerButton = findViewById<Button>(R.id.btnOffer)
-//        var enteredName = ""
-//
-//        submitButton.setOnClickListener {
-//            enteredName = inputField.text.toString()
-//            if (enteredName == ""){
-//                offerButton.visibility = INVISIBLE
-//                greetingTextView.text = ""
-//                Toast.makeText(
-//                    this@MainActivity,
-//                    "Please, enter your name!",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//            }else{
-//                val message = "Welcome $enteredName"
-//                greetingTextView.text = message
-//                inputField.text.clear()
-//                offerButton.visibility = VISIBLE
-//            }
-//        }
-//
-//        offerButton.setOnClickListener {
-//            val intent = Intent(this, SecondActivity::class.java)
-//            intent.putExtra("USER", enteredName)
-//            startActivity(intent)
-//        }
+        buttonPause.setOnClickListener {
+            mediaPlayer?.pause()
+        }
+
+        buttonStop.setOnClickListener {
+            mediaPlayer?.stop()
+            mediaPlayer?.reset()
+            mediaPlayer?.release()
+            mediaPlayer = null
+            handler.removeCallbacks(runnable)
+            seekBar.progress = 0
+        }
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        Log.i("MY_TAG", "MainActivity: OnStart")
-//
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        Log.i("MY_TAG", "MainActivity: OnResume")
-//
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        Log.i("MY_TAG", "MainActivity: OnPause")
-//
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        Log.i("MY_TAG", "MainActivity: OnStop")
-//
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        Log.i("MY_TAG", "MainActivity: OnDestroy")
-//
-//    }
-//
-//    override fun onRestart() {
-//        super.onRestart()
-//        Log.i("MY_TAG", "MainActivity: OnRestart")
-//
-//    }
+    private fun initializeSeekBar(){
+        seekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) mediaPlayer?.seekTo(progress)
+            }
+
+            override fun onStartTrackingTouch(p0: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(p0: SeekBar?) {
+            }
+        })
+
+        val viewPlayed = findViewById<TextView>(R.id.tvPlayed)
+        val viewDue = findViewById<TextView>(R.id.tvDue)
+        seekBar.max = mediaPlayer!!.duration
+
+        runnable = Runnable {
+            seekBar.progress = mediaPlayer!!.currentPosition
+            val playedTime = mediaPlayer!!.currentPosition/1000
+            viewPlayed.text = "$playedTime sec"
+            val duration = mediaPlayer!!.duration/1000
+            val dueTime = duration-playedTime
+            viewDue.text = "$dueTime sec"
+            handler.postDelayed(runnable, 1000)
+        }
+        handler.postDelayed(runnable, 1000)
+    }
 }

@@ -1,67 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     tools:context=".MainActivity">
 
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="132dp"
+        android:layout_height="132dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.068"
+        app:srcCompat="@drawable/clappinghand" />
+
+    <SeekBar
+        android:id="@+id/sbClapping"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.313" />
+
     <TextView
-        android:id="@+id/tvHello"
+        android:id="@+id/tvPlayed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_message"
-        android:textColor="@color/teal_700"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.189" />
-
-    <EditText
-        android:id="@+id/etName"
-        android:layout_width="222dp"
-        android:layout_height="74dp"
-        android:ems="10"
-        android:hint="Type your name here"
-        android:inputType="text|textPersonName"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.294" />
+        app:layout_constraintVertical_bias="0.274" />
 
-    <Button
-        android:id="@+id/btnSubmit"
+    <TextView
+        android:id="@+id/tvDue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tap here!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.959"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintVertical_bias="0.274" />
 
-    <Button
-        android:id="@+id/btnOffer"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View Offer!"
-        android:textSize="14sp"
-        android:visibility="invisible"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.239"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.389"
+        app:srcCompat="@drawable/ic_play" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.389"
+        app:srcCompat="@drawable/ic_pause" />
 
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.757"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.389"
+        app:srcCompat="@drawable/ic_stop" />
 </androidx.constraintlayout.widget.ConstraintLayout>
